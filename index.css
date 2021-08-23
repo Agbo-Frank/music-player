@@ -1,0 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Ubuntu', sans-serif;
+    box-sizing: border-box;
+}
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+    background-image: linear-gradient(to bottom, rgba(248, 157, 157, 0.9), rgba(248, 157, 157, 0.2))
+}
+body h1{
+    text-align: center;
+    margin-bottom: 100px;
+}
+.controls{
+    background-color: white;
+    width: 450px;
+    height: 90px;
+    display: flex;
+    border-radius: 20px;
+    position: relative;
+    padding: 10px;
+    box-shadow: 0 20px 20px rgba(238, 148, 148, 0.9);
+}
+.controls .img{
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: -25%;
+    left: 30px;
+    animation: roll 10s  linear infinite;
+    animation-play-state: paused;
+}
+.img img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+@keyframes roll {
+    from{
+        transform: rotate(0deg);
+    }
+    to{
+        transform: rotate(360deg);
+    }
+}
+.music-player.play .img{
+    animation-play-state: running;
+}
+.img::after{
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+}
+.navigation{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 45%;
+    gap: 20px;
+}
+.navigation span{
+    font-size: 30px;
+    color: grey;
+    cursor: pointer;
+}
+.navigation span:nth-child(2){
+    font-size: 45px;
+    color: rgb(80, 78, 78);
+}
+.details{
+    width: 85%;
+    background-color: rgba(235, 228, 228, 0.5);
+    padding: 15px;
+    border-radius: 10px;
+    transform: translate(-50%, 100%);
+    position: absolute;
+    top: 0;
+    left: 50%;
+    opacity: 0;
+    text-align: center;
+}
+.music-player.play .details{
+    opacity: 1;
+    transform: translate(-50%, -100%);
+}
+.progress-bar{
+    height: 3px;
+    width: 62%;
+    background-color: #fff;
+    margin-left: auto;
+    margin-top: 10px;
+    border-radius: 1px;
+    cursor: pointer;
+}
+.progress{
+    background-color: tomato;
+    height: 100%;
+    width: 0;
+    border-radius: 1px;
+}

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="index.css" rel="stylesheet">
+    <title>music player</title>
+</head>
+<body>
+    <div>
+        <h1>Music Player</h1>
+        <div class="music-player">
+            <audio src="music/ukulele.mp3"></audio>
+            <div class="controls">
+                <div class="details">
+                    <div class="title">Ukulele</div>
+                    <div class="progress-bar"><div class="progress"></div></div>
+                </div>
+                <div class="img">
+                    <img src="image/ukulele.jpg">
+                </div>
+                <div class="navigation">
+                    <span class="material-icons" id="prev">skip_previous</span>
+                    <span class="material-icons" id="play">play_arrow</span>
+                    <span class="material-icons" id="next">skip_next</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var music_player = document.querySelector('.music-player')
+        var playBtn = document.querySelector('#play')
+        var prevBtn = document.querySelector('#prev')
+        var nextBtn = document.querySelector('#next')
+        var progress = document.querySelector('.progress')
+        var progressBar = document.querySelector('.progress-bar')
+        var audio = document.querySelector('audio')
+        var img = document.querySelector('img')
+        var title = document.querySelector('.title')
+        var duration = audio.duration
+        var songs = ['hey', 'summer', 'ukulele']
+        var songIndex = 0
+
+        playBtn.addEventListener('click', e => {
+
+            var isPlaying = music_player.classList.contains('play')
+
+            if(isPlaying){
+                pauseSong(e)
+            }
+            else{
+                playSong(e)
+            }
+        })
+        prevBtn.addEventListener('click', prevSong)
+        nextBtn.addEventListener('click', nextSong)
+        audio.addEventListener('timeupdate', progress_bar)
+        audio.addEventListener('ended', nextSong)
+        progressBar.addEventListener('click', updatesong)
+
+        function pauseSong() {
+                music_player.classList.remove('play')
+                playBtn.innerHTML = 'play_arrow'
+
+                audio.pause()
+        }
+        function playSong(){
+                music_player.classList.add('play')
+                playBtn.innerHTML = 'pause'
+
+                audio.play()
+        }
+        function songPlaying(song){
+            audio.src = `music/${songs[song]}.mp3`
+            img.src = `image/${songs[song]}.jpg`
+            title.innerHTML = songs[song]
+            playSong()
+        }
+        function prevSong(){
+            if(songIndex < 0){
+                songIndex = (songs.length - 2)
+                songPlaying(songIndex)
+            }
+            else{
+                songIndex--
+                songPlaying(songIndex)
+            }
+        }
+        function nextSong(){
+            if(songIndex > songs.length - 2){
+                songIndex = 0
+                songPlaying(songIndex)
+            }
+            else{
+                songIndex++
+                songPlaying(songIndex)
+            }
+        }
+        function progress_bar(e){ 
+            var current_time = e.target.currentTime
+            var width = (current_time / duration) * 100
+
+            progress.style.width = `${width}%`
+        }
+        function updatesong(e){
+            var x = e.offsetX
+            var length = e.target.clientWidth
+            var width = (x / length) * 100
+            progress.style.width = `${width}%`
+
+            var current_time = (x / length) * duration
+
+            audio.currentTime = current_time
+        }
+    </script>
+</body>
+</html>
